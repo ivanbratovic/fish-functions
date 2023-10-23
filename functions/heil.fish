@@ -3,14 +3,15 @@ function heil --description "Prints both head and tail of file"
         echo -e "Usage: \e[1mheil\e[0m \e[4mtop\e[0m \e[4mbottom\e[0m"
         return
     end
-    cat > /tmp/heil.tmp  # not thread safe
+    set outfile (mktemp || tempfile || echo "/tmp/tmp.heil")
+    cat > $outfile
 
-    if test (math $argv[1] + $argv[2]) -ge (wc -l /tmp/heil.tmp | cut -d" " -f 1);
-        cat /tmp/heil.tmp
+    if test (math $argv[1] + $argv[2]) -ge (wc -l $outfile | cut -d" " -f 1);
+        cat $outfile
     else
-        head -n $argv[1] /tmp/heil.tmp
-        tail -n $argv[2] /tmp/heil.tmp
+        head -n $argv[1] $outfile
+        tail -n $argv[2] $outfile
     end
 
-    rm /tmp/heil.tmp
+    rm $outfile
 end
