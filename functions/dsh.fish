@@ -2,7 +2,7 @@ function dsh --wraps='docker exec -it' --description "Execute sh in a running Do
     if test (count $argv) -ne 1
         echo '"dsh" requires exactly 1 argument.'
         echo ""
-        echo "Usage:  dbash CONTAINER"
+        echo "Usage: dsh CONTAINER"
         echo ""
         echo "Run a shell in a running container"
     else
