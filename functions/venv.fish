@@ -1,4 +1,11 @@
 function venv --wraps=source --description 'Alias for source venv/bin/activate.fish'
+    # Deactivate and exit if already in venv
+    if test -n "$VIRTUAL_ENV"; and functions -q deactivate
+        echo "Deactivating virtual environment '$VIRTUAL_ENV'"
+        deactivate
+        return 0
+    end
+
     # Find activations scripts in current dir
     set activation_script (find . -type f -wholename './*/bin/activate.fish' | grep -E --only-matching '^.(/[^/]+){3}$')
     if test -z "$activation_script"
@@ -30,6 +37,6 @@ function venv --wraps=source --description 'Alias for source venv/bin/activate.f
 
     # Activate virtual environment
     set venv_name (echo $activation_script | cut -d'/' -f2)
-    echo "Using virtual environment '$venv_name'"
+    echo "Activating virtual environment '$venv_name'"
     source $activation_script $argv
 end
