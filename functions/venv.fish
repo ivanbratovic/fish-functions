@@ -3,7 +3,14 @@ function venv --wraps=source --description 'Alias for source venv/bin/activate.f
     set activation_script (find . -type f -wholename './*/bin/activate.fish' | grep -E --only-matching '^.(/[^/]+){3}$')
     if test -z "$activation_script"
         echo "Virtual environment not found in current directory."
-        return 1
+        read -P "New virtual environment name (leave empty to abort): " venv_name 
+        if test -z "$venv_name"
+            echo "Aborted!"
+            return 1
+        end
+        echo "Creating Python virtual environment '$venv_name'"
+        python -m venv "$venv_name"
+        set activation_script "./$venv_name/bin/activate.fish"
     end
 
     # Handle multiple virtual environments
