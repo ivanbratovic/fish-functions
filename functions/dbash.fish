@@ -1,4 +1,7 @@
 function dbash --wraps='docker exec -it' --description "Execute bash in a running Docker container"
+    if not __fish_docker_test
+        return 1
+    end
     if test (count $argv) -ne 1
         echo '"dbash" requires exactly 1 argument.'
         echo ""
@@ -10,4 +13,3 @@ function dbash --wraps='docker exec -it' --description "Execute bash in a runnin
     end
 end
 complete -c dbash -f
-
