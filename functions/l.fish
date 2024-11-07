@@ -1,3 +1,3 @@
 function l --wraps=ls --description 'Shorthand for ls'
-    ls $argv; 
+    ls $argv
 end
