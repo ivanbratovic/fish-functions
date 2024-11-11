@@ -1,4 +1,4 @@
-function ls --wraps=eza
+function ls --wraps=eza --wraps=exa --wraps=ls --description 'Use eza/exa if it is available'
     set cmd (which ls)
     if which eza >/dev/null
         set cmd (which eza)

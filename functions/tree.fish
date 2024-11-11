@@ -1,4 +1,4 @@
-function tree
+function tree --wraps='exa --tree' --description 'Use eza/exa if it is available'
     if which eza >/dev/null; or which exa >/dev/null;
         ls --tree $argv
         return
