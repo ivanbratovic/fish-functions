@@ -4,9 +4,9 @@ Collection of useful functions and aliases for fish shell
 
 ## Installation
 
-Download or clone the repository, then just run the `install.bash` script.
-Enter 'y' and confirm your input to replace all the functions in your fish
-config directory.
+Download or clone the repository, then run the `install.bash` script. You'll
+have to confirm replacements file-by-file, or enter "a" to replace all the
+existing functions in your fish config directory.
 
 ## Useful aliases
 
