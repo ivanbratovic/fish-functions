@@ -11,10 +11,10 @@ function __fish_dynamic_alias --description 'Alias, but use alternative commands
             continue
         end
         set bin (echo $arg | awk '{print $1}')
-        if not which $bin >/dev/null;
+        if not which $bin >/dev/null 2>/dev/null;
             continue
         end
-        set cmd $arg
+        set cmd (which $bin)
     end
     if test -z $cmd
         echo "$alias_name: command not found"
