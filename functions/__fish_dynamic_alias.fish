@@ -7,20 +7,20 @@ function __fish_dynamic_alias --description 'Alias, but use alternative commands
             break
         end
         set arg_idx (math $arg_idx + 1)
-        if test -n $cmd;
+        if test -n "$cmd";
             continue
         end
         set bin (echo $arg | awk '{print $1}')
         if not which $bin >/dev/null 2>/dev/null;
             continue
         end
-        set cmd (which $bin)
+        set cmd (which $bin)" "(echo $arg | awk '{for (i=2; i<=NF; i++) print $i}' | xargs)
     end
-    if test -z $cmd
+    if test -z "$cmd"
         echo "$alias_name: command not found"
         return 127
     end
     set arg_idx (math $arg_idx + 1)
     set common_options $argv[$arg_idx..]
-    eval $cmd $common_options
+    eval "$cmd $common_options"
 end
