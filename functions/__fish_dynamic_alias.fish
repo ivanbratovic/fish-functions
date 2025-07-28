@@ -1,26 +1,22 @@
-function __fish_dynamic_alias --description 'Alias, but use alternative commands, if available'
-    set alias_name $argv[1]
-    set arg_idx 2
-    set cmd ""
-    for arg in $argv[2..];
-        if test "$arg" = "%";
-            break
-        end
-        set arg_idx (math $arg_idx + 1)
-        if test -n "$cmd";
-            continue
-        end
-        set bin (echo $arg | awk '{print $1}')
-        if not which $bin >/dev/null 2>/dev/null;
-            continue
-        end
-        set cmd (which $bin)" "(echo $arg | awk '{for (i=2; i<=NF; i++) print $i}' | xargs)
+function __fish_dynamic_alias --description 'Try commands in order until one is found'
+    set -l alias_name $argv[1]
+    set -l separator_idx (contains -i "%" $argv)
+
+    if not set -q separator_idx
+        echo "$alias_name: no separator '%' found"
+        return 1
     end
-    if test -z "$cmd"
-        echo "$alias_name: command not found"
-        return 127
+
+    # Find first available command
+    for cmd_spec in $argv[2..(math $separator_idx - 1)]
+        set -l cmd_parts (string split " " $cmd_spec)
+        if command -q $cmd_parts[1]
+            set -l common_args $argv[(math $separator_idx + 1)..]
+            command $cmd_parts $common_args
+            return
+        end
     end
-    set arg_idx (math $arg_idx + 1)
-    set common_options $argv[$arg_idx..]
-    eval "$cmd $common_options"
+
+    echo "$alias_name: no commands available"
+    return 127
 end
