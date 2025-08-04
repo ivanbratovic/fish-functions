@@ -1,5 +1,5 @@
 function clip --description "STDIN is saved to the system clipboard"
-    if not which xclip >/dev/null;
+    if not command -q xclip >/dev/null;
         echo "Install xclip before running this function."
         return 1
     end

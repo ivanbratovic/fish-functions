@@ -1,5 +1,5 @@
 function batstat --description "Prints battery status using acpi"
-    if not which acpi >/dev/null;
+    if not command -q acpi >/dev/null;
         echo "Install acpi before running this function."
         return 1
     end
