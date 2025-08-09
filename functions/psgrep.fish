@@ -9,7 +9,7 @@ function psgrep -d "Finds a process by a pattern in the output of the ps command
     cat $whole_outfile | grep --color=always $argv | egrep -v "grep.*$argv" > $filtered_outfile
     if test (cat $filtered_outfile | wc -l) -gt 0
        head -n 1 $whole_outfile # Title bar
-       /usr/bin/cat $filtered_outfile # Process list
+       command cat $filtered_outfile # Process list
     else
         echo "No processes found."
         return 1
